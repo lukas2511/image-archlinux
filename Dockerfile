@@ -30,6 +30,22 @@ RUN sed -e s/^\#en_US.UTF-8/en_US.UTF-8/ -i /etc/locale.gen \
  && locale-gen
 
 
+# xnbd-client
+RUN mkdir /tmp/build-xnbd \
+    && cd /tmp/build-xnbd \
+    && wget https://bitbucket.org/hirofuchi/xnbd/downloads/xnbd-0.3.0.tar.bz2 -O xnbd.tar.bz2 \
+    && tar -xf xnbd.tar.bz2 \
+    && cd xnbd-* \
+    && pacman -Sy gcc glib2 automake pkg-config make \
+    && cd /tmp/build-xnbd/xnbd-* \
+    && ./configure --prefix=/usr/local \
+    && make -j4 \
+    && make install \
+    && pacman -Rs gcc glib2 automake pkg-config make \
+    && cd / \
+    && rm -rf /tmp/build-xnbd /tmp/xnbd.tar.bz2
+
+
 # Systemd
 RUN systemctl enable sshd.service \
  && systemctl disable getty@tty1.service \
