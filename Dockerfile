@@ -24,38 +24,24 @@ RUN pacman -Sy --noconfirm \
     wget
 
 
-#    sudo umount $TARGET/{sys,dev,proc} || true
-#    sudo mount -t proc proc $TARGET/proc
-#    sudo mount -t sysfs sys $TARGET/sys
-#    sudo mount -o bind /dev $TARGET/dev
-#    do_in_target 'sed s/root:[^:]\+:/root:x:/ -i /etc/shadow'
-#    sudo mkdir -p $TARGET/run/systemd/resolve
-#    sudo cp /etc/resolv.conf $TARGET/run/systemd/resolve/resolv.conf
-#    do_in_target 'curl https://raw.githubusercontent.com/online-labs/ocs-scripts/master/upgrade_root.bash | bash'
-#    patch_target archlinux/patches
-#    sudo mkdir -p $TARGET/root/.ssh
-#    sudo cp -va /root/.ssh/authorized_keys $TARGET/root/.ssh
-#    echo $LOCALES | sed 's/,/\n/' | while read loc; do
-#      do_in_target "sed -e s/^\#${loc}/${loc}/ -i /etc/locale.gen"
-#    done
-#    do_in_target locale-gen
-#    do_in_target "systemctl enable sshd.service"
-#    do_in_target "systemctl disable getty@tty1.service"
-#    do_in_target "systemctl enable serial-getty@ttyS0.service"
-#    sudo rm -f $TARGET/run/systemd/resolve/resolv.conf
-#    sudo umount $TARGET/{sys,dev,proc} || true
-#    sudo umount $TARGET/{sys,dev,proc} || true
-#    sudo mount -t proc proc $TARGET/proc
-#    sudo mount -t sysfs sys $TARGET/sys
-#    sudo mount -o bind /dev $TARGET/dev
-#    sudo cp /etc/resolv.conf $TARGET/run/systemd/resolve/resolv.conf
-#    do_in_target "pacman --noconfirm -Suy"
-#    sudo rm -f  $TARGET/run/systemd/resolve/resolv.conf
+# Locales
+RUN sed -e s/^\#en_US.UTF-8/en_US.UTF-8/ -i /etc/locale.gen \
+ && locale-gen
+
+
+# Systemd
+RUN systemctl enable sshd.service \
+ && systemctl disable getty@tty1.service \
+ && systemctl enable serial-getty@ttyS0.service
 
 
 # Patch rootfs
 RUN wget -qO - http://j.mp/ocs-scripts | bash
 ADD ./patches/etc/ /etc/
+
+
+# packages upgrade
+RUN pacman --noconfirm -Suy
 
 
 # TEMPORARY DEBUG ACCESS
