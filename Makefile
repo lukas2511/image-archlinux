@@ -1,7 +1,7 @@
 DOCKER_NAMESPACE =	armbuild/
 NAME =			ocs-distrib-archlinux
-VERSION =		2014-12-02
-VERSION_ALIASES =	latest
+VERSION =		latest
+VERSION_ALIASES =	2014-12-02
 TITLE =			Archlinux
 DESCRIPTION =		Archlinux latest
 SOURCE_URL =		https://github.com/online-labs/image-archlinux

@@ -1,4 +1,4 @@
-## -*- docker-image-name: "armbuild/ocs-distrib-archlinux:2014-12-02" -*-
+## -*- docker-image-name: "armbuild/ocs-distrib-archlinux:latest" -*-
 FROM armbuild/archlinux-disk:2014-12-02
 MAINTAINER Online Labs <opensource@ocs.online.net>
 
