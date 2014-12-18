@@ -21,7 +21,8 @@ RUN pacman -Sy --noconfirm \
     ntp \
     openssh \
     vim \
-    wget
+    wget \
+    networkmanager
 
 
 # Locales
@@ -38,6 +39,7 @@ RUN systemctl enable sshd.service \
 # Patch rootfs
 RUN wget -qO - http://j.mp/ocs-scripts | bash
 ADD ./patches/etc/ /etc/
+ADD ./patches/usr/ /usr/
 
 
 # packages upgrade

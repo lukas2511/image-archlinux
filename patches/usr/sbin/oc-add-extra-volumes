@@ -1,0 +1,36 @@
+#!/bin/bash
+
+METADATA_CACHE=`mktemp -u`
+
+get_metadata() {
+    if [ ! -f $METADATA_CACHE ]; then
+        /usr/local/bin/oc-metadata > $METADATA_CACHE
+    fi
+}
+
+get_value() {
+  # Get value from metadata
+  key="$1"
+  grep "^$key=" "$METADATA_CACHE" | cut -d= -f2 | sed "s/^['\"]//;s/['\"]$//"
+}
+
+add_volumes() {
+    keys=$(get_value VOLUMES)
+    for key in $keys
+    do
+	test $key -eq 0 && continue
+	host=$(get_value VOLUMES_${key}_EXPORT_URI | sed 's|nbd://\(.*\):.*|\1|')
+	port=$(get_value VOLUMES_${key}_EXPORT_URI | sed 's|nbd://.*:\(.*\)|\1|')
+	device=/dev/nbd$key
+	xnbd-client -c $device && continue
+	for i in {1..3}
+	do
+	    xnbd-client --connect $device $host $port --blocksize 4096 && break
+	    sleep 5
+	done
+    done
+}
+
+get_metadata
+add_volumes
+rm $METADATA_CACHE

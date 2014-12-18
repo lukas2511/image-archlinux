@@ -1,0 +1,45 @@
+#!/bin/bash
+
+ROOT_DEVICE="/dev/nbd0"
+
+umount_nbd_devices() {
+    for device in $(mount | cut -d " " -f 1 | grep /dev/nbd)
+    do
+	test $device = $ROOT_DEVICE && continue
+	umount $device 2>/dev/null
+	if [ $? -eq 1 ]
+	then
+            echo -n "umount of $device failed! Data loss may occur! will continue in 10 seconds..."
+            sleep 1
+            for i in 9 8 7 6 5 4 3 2 1
+            do
+                echo -n $i" "
+		sleep 1
+            done
+            echo "ok, going on..."
+	fi
+    done
+}
+
+swapoff_nbd_devices() {
+    for device in $(grep '^/dev/nb' /proc/swaps | cut -d ' ' -f1)
+    do
+	swapoff $device 2> /dev/null
+    done
+
+}
+
+disconnect_devices() {
+    for device in $(ls /dev/nbd*)
+    do
+        test $device = $ROOT_DEVICE && continue
+        if xnbd-client -c $device 2> /dev/null
+	then
+	    xnbd-client -d $device
+	fi
+    done
+}
+
+umount_nbd_devices
+swapoff_nbd_devices
+disconnect_devices
