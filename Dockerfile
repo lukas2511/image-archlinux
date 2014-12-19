@@ -48,10 +48,12 @@ RUN mkdir /tmp/build-xnbd \
 
 # Systemd
 RUN systemctl disable getty@tty1.service \
+ && systemctl enable NetworkManager-wait-online.service \
  && systemctl disable systemd-networkd.service \
  && systemctl enable serial-getty@ttyS0.service \
  && systemctl enable sshd.service \
- && systemctl enable NetworkManager
+ && systemctl enable NetworkManager \
+ && systemctl enable ntpdate
 
 
 # Patch rootfs
