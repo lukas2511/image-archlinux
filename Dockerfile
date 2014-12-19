@@ -47,9 +47,11 @@ RUN mkdir /tmp/build-xnbd \
 
 
 # Systemd
-RUN systemctl enable sshd.service \
- && systemctl disable getty@tty1.service \
- && systemctl enable serial-getty@ttyS0.service
+RUN systemctl disable getty@tty1.service \
+ && systemctl disable systemd-networkd.service \
+ && systemctl enable serial-getty@ttyS0.service \
+ && systemctl enable sshd.service \
+ && systemctl enable NetworkManager
 
 
 # Patch rootfs
