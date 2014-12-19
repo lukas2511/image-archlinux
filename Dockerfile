@@ -48,8 +48,8 @@ RUN mkdir /tmp/build-xnbd \
 
 # Systemd
 RUN systemctl disable getty@tty1.service \
- && systemctl enable NetworkManager-wait-online.service \
  && systemctl disable systemd-networkd.service \
+ && systemctl enable NetworkManager-wait-online.service \
  && systemctl enable serial-getty@ttyS0.service \
  && systemctl enable sshd.service \
  && systemctl enable NetworkManager \
@@ -60,6 +60,11 @@ RUN systemctl disable getty@tty1.service \
 RUN wget -qO - http://j.mp/ocs-scripts | bash
 ADD ./patches/etc/ /etc/
 ADD ./patches/usr/ /usr/
+
+
+RUN systemctl enable oc-ssh-keys \
+ && systemctl enable oc-add-extra-volumes \
+ && systemctl enable oc-sync-kernel-modules
 
 
 # packages upgrade
