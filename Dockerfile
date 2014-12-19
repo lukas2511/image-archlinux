@@ -36,12 +36,12 @@ RUN mkdir /tmp/build-xnbd \
     && wget https://bitbucket.org/hirofuchi/xnbd/downloads/xnbd-0.3.0.tar.bz2 -O xnbd.tar.bz2 \
     && tar -xf xnbd.tar.bz2 \
     && cd xnbd-* \
-    && pacman -Sy gcc glib2 automake pkg-config make \
+    && pacman -Sy --noconfirm gcc automake pkg-config make \
     && cd /tmp/build-xnbd/xnbd-* \
     && ./configure --prefix=/usr/local \
     && make -j4 \
     && make install \
-    && pacman -Rs gcc glib2 automake pkg-config make \
+    && pacman -R --noconfirm gcc automake pkg-config make \
     && cd / \
     && rm -rf /tmp/build-xnbd /tmp/xnbd.tar.bz2
 
