@@ -1,7 +1,7 @@
 Official Archlinux image on Online Labs
 =======================================
 
-**Warning: this is image is not yet working**
+**Warning: this image is not yet working**
 
 Scripts to build the official Archlinux image on Online Labs
 
