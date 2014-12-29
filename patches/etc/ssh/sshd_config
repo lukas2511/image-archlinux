@@ -41,7 +41,7 @@
 # Authentication:
 
 #LoginGraceTime 2m
-#PermitRootLogin yes
+PermitRootLogin without-password
 #StrictModes yes
 #MaxAuthTries 6
 #MaxSessions 10
@@ -108,7 +108,7 @@ PrintMotd no # pam does that
 #TCPKeepAlive yes
 #UseLogin no
 UsePrivilegeSeparation sandbox		# Default for new installations.
-#PermitUserEnvironment no
+PermitUserEnvironment no
 #Compression delayed
 #ClientAliveInterval 0
 #ClientAliveCountMax 3
