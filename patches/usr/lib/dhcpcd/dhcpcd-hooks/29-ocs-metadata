@@ -1,0 +1,18 @@
+# Fetch OCS metadata
+
+fetch_ocs_metadata()
+{
+  metadata_host_name=$(/usr/local/bin/oc-metadata --cached HOSTNAME)
+  if [ "x$metadata_host_name" != "x" ]; then
+    echo $metadata_host_name > /etc/hostname
+    sed "/^127.0.1.1[ \t].*$/ s/.*$/127.0.1.1\t$metadata_host_name/" -i /etc/hosts
+    sed "/^127.0.0.1[ \t]localhost/ s/localhost.*$/localhost $metadata_host_name/" -i /etc/hosts
+    export new_host_name="${metadata_host_name}"
+    hostname $metadata_host_name
+    echo dhclient-exit-hooks.d/hostname: Dynamic Hostname = ${metadata_host_name}
+  fi
+}
+
+if $if_up; then
+    fetch_ocs_metadata
+fi
