@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+interface=$1
+action=$2
+
+if [ "$interface" = "eth0" -a "$action" = "up" ]
+then
+    rm -f /etc/resolv.conf
+    ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf
+fi
