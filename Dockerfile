@@ -49,7 +49,8 @@ RUN sed -e s/^\#en_US.UTF-8/en_US.UTF-8/ -i /etc/locale.gen \
 
 # Cleanup
 RUN pacman -Rns linux-armv7 --noconfirm \
- && pacman -Sc --noconfirm
+ && pacman -Sc --noconfirm \
+ && rm -rf /var/cache/pacman/pkg
 
 
 # Systemd
