@@ -26,16 +26,6 @@ RUN pacman -Sy --noconfirm \
     wget
 
 
-# Cleanup
-RUN pacman -Rns linux-armv7 --noconfirm \
- && pacman -Sc --noconfirm
-
-
-# Locales
-RUN sed -e s/^\#en_US.UTF-8/en_US.UTF-8/ -i /etc/locale.gen \
- && locale-gen
-
-
 # xnbd-client
 RUN mkdir /tmp/build-xnbd \
     && cd /tmp/build-xnbd \
@@ -50,6 +40,16 @@ RUN mkdir /tmp/build-xnbd \
     && pacman -R --noconfirm gcc automake pkg-config make \
     && cd / \
     && rm -rf /tmp/build-xnbd /tmp/xnbd.tar.bz2
+
+
+# Locales
+RUN sed -e s/^\#en_US.UTF-8/en_US.UTF-8/ -i /etc/locale.gen \
+ && locale-gen
+
+
+# Cleanup
+RUN pacman -Rns linux-armv7 --noconfirm \
+ && pacman -Sc --noconfirm
 
 
 # Systemd
