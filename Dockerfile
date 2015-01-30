@@ -25,6 +25,10 @@ RUN pacman -Sy --noconfirm \
     networkmanager
 
 
+# Cleanup
+RUN yes | pacman -Rns linux-armv7
+
+
 # Locales
 RUN sed -e s/^\#en_US.UTF-8/en_US.UTF-8/ -i /etc/locale.gen \
  && locale-gen
