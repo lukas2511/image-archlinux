@@ -26,7 +26,8 @@ RUN pacman -Sy --noconfirm \
 
 
 # Cleanup
-RUN yes | pacman -Rns linux-armv7
+RUN pacman -Rns linux-armv7 --noconfirm \
+ && pacman -Sc --noconfirm
 
 
 # Locales
