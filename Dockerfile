@@ -74,13 +74,6 @@ ADD ./patches/etc/ /etc/
 ADD ./patches/usr/ /usr/
 
 
-# Cleanup
-RUN pacman -Rns linux-armv7 --noconfirm \
- && pacman -Sc --noconfirm \
- && rm -rf /var/cache/pacman/pkg \
- && localepurge-config && localepurge
-
-
 RUN systemctl enable oc-ssh-keys \
  && systemctl enable oc-add-extra-volumes \
  && systemctl enable oc-sync-kernel-modules
@@ -88,3 +81,10 @@ RUN systemctl enable oc-ssh-keys \
 
 # packages upgrade
 RUN pacman --noconfirm -Suy
+
+
+# Cleanup
+RUN pacman -Rns linux-armv7 --noconfirm \
+ && pacman -Sc --noconfirm \
+ && rm -rf /var/cache/pacman/pkg \
+ && localepurge-config && localepurge
