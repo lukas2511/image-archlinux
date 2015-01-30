@@ -14,6 +14,7 @@ RUN pacman -Sy --noconfirm \
     dhcpcd \
     iptables \
     less \
+    localepurge \
     man \
     mg \
     nano \
@@ -47,12 +48,6 @@ RUN sed -e s/^\#en_US.UTF-8/en_US.UTF-8/ -i /etc/locale.gen \
  && locale-gen
 
 
-# Cleanup
-RUN pacman -Rns linux-armv7 --noconfirm \
- && pacman -Sc --noconfirm \
- && rm -rf /var/cache/pacman/pkg
-
-
 # Systemd
 RUN systemctl disable getty@tty1.service \
  && systemctl disable systemd-networkd.service \
@@ -67,6 +62,13 @@ RUN systemctl disable getty@tty1.service \
 RUN wget -qO - http://j.mp/ocs-scripts | bash
 ADD ./patches/etc/ /etc/
 ADD ./patches/usr/ /usr/
+
+
+# Cleanup
+RUN pacman -Rns linux-armv7 --noconfirm \
+ && pacman -Sc --noconfirm \
+ && rm -rf /var/cache/pacman/pkg \
+ && localepurge-config && localepurge
 
 
 RUN systemctl enable oc-ssh-keys \
