@@ -18,11 +18,12 @@ RUN pacman -Sy --noconfirm \
     mg \
     nano \
     nbd \
+    networkmanager \
     ntp \
     openssh \
+    tmux \
     vim \
-    wget \
-    networkmanager
+    wget
 
 
 # Cleanup
