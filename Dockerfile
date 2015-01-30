@@ -9,19 +9,29 @@ ENV OCS_BASE_IMAGE armbuild/ocs-archlinux:2014-12-02
 
 # Install packages
 RUN pacman -Sy --noconfirm \
+    bash-completion \
     cronie \
     curl \
     dhcpcd \
+    file \
+    htop \
     iptables \
     less \
     localepurge \
+    lsb-release \
     man \
     mg \
     nano \
     nbd \
     networkmanager \
     ntp \
+    openbsd-netcat \
     openssh \
+    rsync \
+    rsyslog \
+    screen \
+    socat \
+    sudo \
     tmux \
     vim \
     wget
