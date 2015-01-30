@@ -13,6 +13,7 @@ RUN pacman -Sy --noconfirm \
     cronie \
     curl \
     dhcpcd \
+    dnsutils \
     file \
     htop \
     iptables \
