@@ -68,23 +68,25 @@ RUN systemctl disable getty@tty1.service \
  && systemctl enable ntpdate
 
 
+# packages upgrade
+RUN pacman --noconfirm -Suy
+
+
 # Patch rootfs
 RUN wget -qO - http://j.mp/ocs-scripts | bash
 ADD ./patches/etc/ /etc/
 ADD ./patches/usr/ /usr/
 
 
+# Enable Online-Labs services
 RUN systemctl enable oc-ssh-keys \
  && systemctl enable oc-add-extra-volumes \
  && systemctl enable oc-sync-kernel-modules
 
 
-# packages upgrade
-RUN pacman --noconfirm -Suy
-
-
 # Cleanup
-RUN pacman -Rns linux-armv7 --noconfirm \
+RUN pacman-db-upgrade \
+ && pacman -Rns linux-armv7 --noconfirm \
  && pacman -Sc --noconfirm \
  && rm -rf /var/cache/pacman/pkg \
  && localepurge-config && localepurge
