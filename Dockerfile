@@ -89,4 +89,5 @@ RUN pacman-db-upgrade \
  && pacman -Rns linux-armv7 --noconfirm \
  && pacman -Sc --noconfirm \
  && rm -rf /var/cache/pacman/pkg \
- && localepurge-config && localepurge
+ && localepurge-config && localepurge \
+ && pacman-db-upgrade
