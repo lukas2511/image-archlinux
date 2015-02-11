@@ -85,6 +85,10 @@ RUN systemctl enable oc-ssh-keys \
  && systemctl enable oc-sync-kernel-modules
 
 
+# Remove root password
+RUN passwd -d root
+
+
 # Cleanup
 RUN pacman-db-upgrade \
  && pacman -Rns linux-armv7 --noconfirm \
