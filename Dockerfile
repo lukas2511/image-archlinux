@@ -10,10 +10,13 @@ ENV OCS_BASE_IMAGE armbuild/ocs-archlinux:2014-12-02
 # Install packages
 RUN pacman -Sy --noconfirm \
     bash-completion \
+    bc \
+    binutils \
     cronie \
     curl \
     dhcpcd \
     dnsutils \
+    fakeroot \
     file \
     htop \
     iptables \
@@ -36,6 +39,16 @@ RUN pacman -Sy --noconfirm \
     tmux \
     vim \
     wget
+
+
+# shunit2
+RUN mkdir -p /tmp/shunit2 \
+ && chown nobody /tmp/shunit2 \
+ && cd /tmp/shunit2 \
+ && wget https://aur.archlinux.org/packages/sh/shunit2/PKGBUILD \
+ && sudo -u nobody makepkg --nocheck ./PKGBUILD \
+ && pacman -U --noconfirm shunit2-*-any.pkg.tar.xz \
+ && rm -rf /tmp/shunit2
 
 
 # xnbd-client
