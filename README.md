@@ -1,4 +1,4 @@
-Official Archlinux image on Online Labs
+Official Archlinux image on Online Labs [![Build Status](https://travis-ci.org/online-labs/image-archlinux.svg?branch=master)](https://travis-ci.org/online-labs/image-archlinux)
 =======================================
 
 **Warning: this image is not yet working**
