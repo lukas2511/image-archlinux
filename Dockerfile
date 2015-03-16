@@ -109,3 +109,7 @@ RUN pacman-db-upgrade \
  && rm -rf /var/cache/pacman/pkg \
  && localepurge-config && localepurge \
  && pacman-db-upgrade
+
+
+# Relabel the whole filesystem on next boot
+RUN touch /.autorelabel
