@@ -3,7 +3,7 @@ Description=OCS fetch kernel modules from OCS mirror
 After=NetworkManager-wait-online.service
 
 [Service]
-ExecStart=/usr/sbin/oc-sync-kernel-modules
+ExecStart=/usr/local/sbin/oc-sync-kernel-modules
 Type=oneshot
 
 [Install]

@@ -7,4 +7,4 @@ After=shutdown.target umount.target final.target
 
 [Service]
 Type=oneshot
-ExecStart=/usr/sbin/oc-nbd-disconnect-root
+ExecStart=/usr/local/sbin/oc-nbd-disconnect-root
